@@ -1,4 +1,4 @@
-import {User} from './user';
+import {User} from '../entities';
 
 export class UserConverter {
   public static from(data: any): User {
