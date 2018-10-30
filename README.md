@@ -1,27 +1,56 @@
-# Ang7Multilib
+# Angular 7 multi library project
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.0.3.
 
-## Development server
+## Project structure:
+We have big angular project with multiple apps and multiple libraries.
+Some libraries depends on other libraries and so on. 
+Most important feature for our development team is typescript import using alias
+set in paths object inside tsconfig.json configuration file.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+## Problem:
+Passing from vscode to WebStorm we have noticed that typescript imports
+autocomplete won't work as we expected.
+Precisely, auto import always suggests tsconfig alias which is correct
+when we need imports from another lib but when we need relative import
+inside lib, ex. import class from one directory to another using index.ts barrels,
+WebStorm autocomplete won't give us that relative path as suggestion.
+Vscode autocomplete give us multiple possibilities in popup and we were
+able to choose correct import.
+It's really hard to correct all imports manually during development. If we
+leave alias import internally we will have 'circular dependency error'
+during build process.
 
-## Code scaffolding
+We have tsconfig.json with paths configuration as follow:
+```json
+ "paths": {
+      "lib-utils": [
+        "dist/lib-utils",
+        "projects/lib-utils/src/public_api"
+      ],
+      "lib-utils/*": [
+        "dist/lib-utils/*"
+      ],
+      "lib-shared": [
+        "dist/lib-shared",
+        "projects/lib-shared/src/public_api"
+      ],
+      "lib-shared/*": [
+        "dist/lib-shared/*"
+      ]
+    }
+```
+Angular cli generates libraries and add relative paths to dist folder.
+This is limitation for typescript imports inside WebStorm, as far as we know.
+We add second element in lib-utils and lib-shared arrays that points to the public_api.ts.
+That resolve all imports during development but unfortunately override relative path import, when needed.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## How to reproduce the problem
+1) Open project with WebStorm
+2) Remove import from class UserConverter in projects/lib-utils/src/lib/converters/UserConverter.ts
+3) Try to import using auto import ( keyboard shortcut Alt+Return )
 
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+## How to run application
+```shell
+ng serve
+```
