@@ -133,6 +133,76 @@
           }
         }
       }
+    },
+    "lib-utils": {
+      "root": "projects/lib-utils",
+      "sourceRoot": "projects/lib-utils/src",
+      "projectType": "library",
+      "prefix": "utils",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/lib-utils/tsconfig.lib.json",
+            "project": "projects/lib-utils/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/lib-utils/src/test.ts",
+            "tsConfig": "projects/lib-utils/tsconfig.spec.json",
+            "karmaConfig": "projects/lib-utils/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/lib-utils/tsconfig.lib.json",
+              "projects/lib-utils/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "lib-shared": {
+      "root": "projects/lib-shared",
+      "sourceRoot": "projects/lib-shared/src",
+      "projectType": "library",
+      "prefix": "sr",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/lib-shared/tsconfig.lib.json",
+            "project": "projects/lib-shared/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/lib-shared/src/test.ts",
+            "tsConfig": "projects/lib-shared/tsconfig.spec.json",
+            "karmaConfig": "projects/lib-shared/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/lib-shared/tsconfig.lib.json",
+              "projects/lib-shared/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }
   },
   "defaultProject": "ang7-multilib"

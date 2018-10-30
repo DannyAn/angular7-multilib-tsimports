@@ -16,6 +16,22 @@
     "lib": [
       "es2018",
       "dom"
-    ]
+    ],
+    "paths": {
+      "lib-utils": [
+        "dist/lib-utils",
+        "projects/lib-utils/src/public_api"
+      ],
+      "lib-utils/*": [
+        "dist/lib-utils/*"
+      ],
+      "lib-shared": [
+        "dist/lib-shared",
+        "projects/lib-shared/src/public_api"
+      ],
+      "lib-shared/*": [
+        "dist/lib-shared/*"
+      ]
+    }
   }
 }
